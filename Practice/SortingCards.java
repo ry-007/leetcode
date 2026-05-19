@@ -34,12 +34,46 @@ Input:
 **A-S
  */
 
+import java.util.*;
+
 class SortingCards {
     public static void main(String args[]) {
+        Map<String,Integer> rankWt = new HashMap<>();
+        Map<String, Integer> suiteWt = new HashMap<>();
+        String[] ranks = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"};
+        String[] suites = {"H", "D", "C", "S"};
+        int r = 0;
+        for(String s : ranks) {
+            rankWt.put(s, ++r);
+        }
 
+        r = 0;
+        for(String s : suites) {
+            suiteWt.put(s, ++r);
+        } 
+
+        List<String> cards = Arrays.asList(
+            "5-H",
+                "A-S",
+                "K-D",
+                "10-C",
+                "J-H"
+        );
+
+        cards.sort((card1, card2) -> {
+            String[] c1 = card1.split("-");
+            String[] c2 = card2.split("-");
+
+            int rankCompare = Integer.compare(rankWt.get(c1[0]),rankWt.get(c2[0]));
+
+            if(rankCompare != 0) {
+                return rankCompare;
+            } else {
+                return  Integer.compare(suiteWt.get(c1[2]),suiteWt.get(c2[2]));
+            }
+        });
+
+        System.out.println(cards.get(cards.size()-1));
+       
     }
-
-    String getHighestRankedCard(List<String> cards) {
-        
-    } 
 }
